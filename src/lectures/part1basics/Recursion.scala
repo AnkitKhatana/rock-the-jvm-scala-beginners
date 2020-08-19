@@ -57,9 +57,10 @@ object Recursion extends App {
 
   def prime(n: Int): Boolean = {
     @tailrec
-    def primeHelper(divisor: Int , accumulator: Boolean): Boolean =
-      if(divisor==1) accumulator
-      else primeHelper(divisor-1 , accumulator && !(n%divisor==0))
+    def primeHelper(divisor: Int , isStillPrime: Boolean): Boolean =                    //isStillPrime acts as accumulator
+      if(!isStillPrime) false
+      else if(divisor==1) isStillPrime
+      else primeHelper(divisor-1 , isStillPrime && !(n%divisor==0))
     primeHelper(n/2,true)
   }
 
@@ -88,4 +89,9 @@ object Recursion extends App {
   println(fibonacci(6))           //prints 8
   println(fibonacci(7))           //prints 13
   println(fibonacci(8))           //prints 21
+
+
+
+  // In tail recursion , we eliminate the need to store partial results(inside stack frames) by keeping those results in accumulator variable.
+  // At every recursive call , whatever we wanted to compute recursively and keep for later use , we add that to accumulator(Finding how to add to accumulator is the main challenge)
 }

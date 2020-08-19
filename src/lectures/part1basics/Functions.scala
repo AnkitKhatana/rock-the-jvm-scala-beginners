@@ -10,7 +10,7 @@ object Functions extends App{
   println(aFunction("Hello",5))                           //prints "Hello 5" . Calling a function is also an expression.
 
 
-  //PARAMETER LESS FUNCTIONS
+  //PARAMETER LESS FUNCTION
   def aParameterLessFunction(): Int = 42                  //returns 42
   println(aParameterLessFunction())                       //prints 42
   println(aParameterLessFunction)                         //prints 42 . Parameter less function can also be called just by their name i.e without parenthesis

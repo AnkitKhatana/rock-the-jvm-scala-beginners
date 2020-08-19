@@ -41,7 +41,7 @@ object Expressions extends App {
   println (aWeirdValue)         // prints (). "()" is the only value a unit type can hold.
 
 
-  // Ex of side Effects : println(), whiles , reassigning. Side effects are reminiscent of Imperative programming i.e they're like instructions but in scala they're still expressions which returns Unit.
+  // Examples of side Effects : println(), whiles , reassigning. Side effects are reminiscent of Imperative programming i.e they're like instructions but in scala they're still expressions which returns Unit.
 
 
   //Code Blocks : surrounded by curly braces and inside we can write code. Code block is an expression . Value of the block is value of its last expression.
