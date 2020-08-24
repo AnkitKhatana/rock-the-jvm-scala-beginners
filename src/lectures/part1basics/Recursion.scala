@@ -73,10 +73,7 @@ object Recursion extends App {
     @tailrec
     def fiboHelper(i: Int , last: Int , secondLast: Int): Int =
       if(i==n) last
-      else {
-        val current = last + secondLast
-        fiboHelper(i+1 , current , last)
-      }
+      else fiboHelper(i+1 , last + secondLast , last)
     if(n<3) 1
     else fiboHelper(2 , 1, 1)
   }
