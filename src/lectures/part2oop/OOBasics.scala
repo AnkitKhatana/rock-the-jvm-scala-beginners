@@ -29,7 +29,7 @@ object OOBasics extends App {
 
   println(novel_alchemist.authorAge)                        //prints 39
   println(novel_alchemist.isWrittenBy(writer))              //prints true
-  println(novel_alchemist.isWrittenBy(imposter))            //prints false. Although the values are same but since objects are different we got false.
+  println(novel_alchemist.isWrittenBy(imposter))            //prints false. Although the values are same but since instances of the class are different we got false.
 
   val new_alchemist = novel_alchemist.copy(2005)
   println(new_alchemist.authorAge)                          //prints 43
@@ -42,7 +42,7 @@ object OOBasics extends App {
   counter.increment(5).print                        //prints "Incrementing" 5 times and then count value which is 5
   counter.decrement(3).print                        //prints "Decrementing" 3 times and then count value which is -3
 
-  //Notice that increment method returns a Counter object but since we're not catching it , we're not able to track the progress across the lines
+  //Notice that increment method returns a Counter class instance but since we're not catching it , we're not able to track the progress across the lines
 }
 
 
@@ -125,7 +125,7 @@ class Novel(val name: String, val yearOfRelease: Int, val author: Writer ){
 
 class Counter(val count : Int ) {
   // No need to define the method to return the current count because we can access current count using dot operator because count is field not parameter(cuz , we have used val in front of the name in constructor definition)
-  def increment: Counter = {                             // Here we're returning the new counter object rather than modifying current count. We cannot modify count as it is val not var. This is principle of immutability.
+  def increment: Counter = {                             // Here we're returning the new counter class instance rather than modifying current count. We cannot modify count as it is val not var. This is principle of immutability.
     println("Incrementing")
     new Counter(count+1)
   }
@@ -138,7 +138,7 @@ class Counter(val count : Int ) {
 
   def increment(amount: Int): Counter = {
     if(amount<=0) this
-    else increment.increment(amount-1)                    //increment method without parameters return a new Counter object which is then used to call increment function with parameters. processing(inc) is done by increment function without parameters but we need to decrement the amount to keep track of remaining increments, so we call increment(n-1).
+    else increment.increment(amount-1)                    //increment method without parameters return a new Counter class instance which is then used to call increment function with parameters. processing(inc) is done by increment function without parameters but we need to decrement the amount to keep track of remaining increments, so we call increment(n-1).
 
   }
 
