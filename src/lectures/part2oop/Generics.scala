@@ -1,12 +1,13 @@
 package lectures.part2oop
 
 object Generics extends App {
-  // When you want to implement a functionality for more than one type without writing the code for each type. Ex: Linked List for each type
-  class MyList[A] {                   // type A in between the square brackets denotes the generic type. Can use generic type in trait type parametrization.
+  // When you want to implement a functionality for more than one type without writing the code for each type, You use Generics. Ex: Linked List for each type(i.e Int , String , Float etc)
+  // Generic classes are classes which take a type as parameter within square brackets. They are particularly useful for collection classes.
+  class MyList[A] {                   // type A in between the square brackets denotes the generic type. You can use type parameters with traits as well.
     //use the Type A
   }
 
-  class MyMap[Key,Value]                            // Here , key and value are two generic types. You can have as many generic types as you want.
+  class MyMap[Key,Value]                            // Here , key and value are two type parameters. You can have as many type parameters as you want.
 
   // Instantiate the above class with different datatype
   val integerList = new MyList[Int]                 //Now A will act as Int in class definition
@@ -14,9 +15,9 @@ object Generics extends App {
 
 
   // Generic Methods
-  object MyList {                                   // objects cannot be type parametrized , object MyL comist =panion to class MyList
-    //Method for : Given a type parameter , construct an empty MyList parametrized with that type
-    def empty[A]: MyList[A] = ???                   // Method empty type-parametrized with A. ??? denotes that no implementation now and returns nothing
+  object MyList {                                   // objects cannot be type parametrized , object MyList is companion to class MyList
+    //Method for : Given a type parameter A, return an empty MyList of A
+    def empty[A]: MyList[A] = ???                   // ??? denotes that no implementation now and returns nothing
   }
   //Use of empty method
   val emptyListOfIntegers = MyList.empty[Int]
@@ -29,21 +30,21 @@ object Generics extends App {
 
   /*
       Question : If Cat extends Animal , does List of Cats also extends List of Animals.
-      Answer : 3 options=
+      Answer : 3 options =
         1) Yes : List[Cat] extends List[Animal] . This behavior is called CO-VARIANCE.
         2) No : List[Cat] and List[Animal] are two separate things. Called IN-VARIANCE.
-        3) Hell , No !! : Relationship is exactly opposite. Called CONTRA-VARIANCE.
+        3) BIG No !! : Relationship is exactly opposite. Called CONTRA-VARIANCE.
    */
 
   //Covariant List
   class CovariantList[+A]                               //"+A" denotes that this is covariant list.
   val animal: Animal = new Cat                          //Polymorphic type substitution
   val animalList: CovariantList[Animal] = new CovariantList[Cat]              //Instantiation of CovariantList done in same way as polymorphic type substitution
-  //Hard question on this approach : Can I add a Dog to animalList? i.e animalList.add(new Dog)  =>  We return a list of animals.
+  //Good question on this approach : Can I add a Dog to animalList? i.e animalList.add(new Dog)  =>  We return a list of animals.
   //Since animalList is list of animals and Dog is animal ,In theory ,we should be able to add it ; BUT ; if we add Dog it'll pollute the list since it is list of Cats
 
 
-  //InVariant List - Easy Option
+  //InVariant List - Default Behavior
   class invariantList[A]                                                                            //MyList defined at the top is an invariant list.
   val invaiantAnimalList: invariantList[Animal] = new invariantList[Animal]
   // val invaiantAnimalList: invariantList[Animal] = new invariantList[Cat]                        // Not Allowed
