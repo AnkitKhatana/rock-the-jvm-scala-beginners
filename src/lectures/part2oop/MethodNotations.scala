@@ -79,6 +79,7 @@ object MethodNotations extends App {
 
   println(mary.apply())                 // prints "Hi , my name is Mary and I like Inception"
   println(mary())                       // equivalent to println(mary.apply())
+  println(mary)                         // Prints "lectures.part2oop.MethodNotations$Person@326de728" i.e instance itself
 
   /*
       Whenever compiler sees an object being called like a function , it looks for definition of apply in that particular class.

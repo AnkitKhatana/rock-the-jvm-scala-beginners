@@ -26,7 +26,7 @@ object Recursion extends App {
     @tailrec                                                                    // @tailrec is a scala annotation to denote a tail recursive function. It can be used to check whether a function is tail recursive or not. if , method is not tail recursive , you'll get error stating that recursive call is not in tail position.
     def factorialHelper(n: Int , accumulator: BigInt): BigInt = {
       if(n == 1)  accumulator
-      else factorialHelper(n-1 , n*accumulator)                                 //last expression is a call to same function as opposed to product of 'n' and 'result of factorial(n-1)' in previous factorial function.
+      else factorialHelper(n-1 , n * accumulator)                                 //last expression is a call to same function as opposed to product of 'n' and 'result of factorial(n-1)' in previous factorial function.
     }
     factorialHelper(n,1)
   }
