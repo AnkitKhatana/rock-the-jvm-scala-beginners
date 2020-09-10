@@ -31,7 +31,7 @@ abstract class MyList[+A]  {
 
         Map will work like this. if transformer : n*2 ;then; [1,2,3].map(transformer) => [2,4,6]
         Filter will work like this. if test : (n%2) ;then; [1,2,3,4].filter(test) => [2,4]
-        Flatmap will work like this. if transformer : (n=> [n,n+1]) ;then; [1,2,3,4].flatmap(transformer) => [1,2,2,3,3,4,4,5]      i.e flatmap concatenates lists outputted by transformer for each n.
+        Flatmap will work like this. if transformer : (n=> [n,n+1]) ;then; [1,2,3,4].flatMap(transformer) => [1,2,2,3,3,4,4,5]      i.e flatMap concatenates lists outputted by transformer for each n.
 
 
     ********** Exercise (Case Classes) :
@@ -67,8 +67,8 @@ abstract class MyList[+A]  {
   //HIGHER ORDER FUNCTIONS : Higher order functions either receive Function as parameter or return Function as result.
   def filter(predicate: A => Boolean): MyList[A]
   def map[B](transformer: A=>B): MyList[B]
-  def flatmap[B](transformer: A => MyList[B]): MyList[B]
-  //Concatenation function used for flatmap
+  def flatMap[B](transformer: A => MyList[B]): MyList[B]
+  //Concatenation function used for flatMap
   def ++[B >: A](list : MyList[B]): MyList[B]
 
   //hofs
@@ -100,7 +100,7 @@ case object Empty extends MyList[Nothing] {                                     
 
   def filter(predicate: Nothing => Boolean): MyList[Nothing] = Empty
   def map[B](transformer: Nothing => B): MyList[B] = Empty
-  def flatmap[B](transformer: Nothing => MyList[B]): MyList[B] = Empty
+  def flatMap[B](transformer: Nothing => MyList[B]): MyList[B] = Empty
   def ++[B >: Nothing] (list : MyList[B]): MyList[B] = list
 
   def foreach(function: Nothing=>Unit): Unit = ()
@@ -153,11 +153,11 @@ case class Cons[+A](h: A , t: MyList[A]) extends MyList[A]{                     
       = [1,2,3,4,5]
    */
 
-  def flatmap[B](transformer: A => MyList[B]): MyList[B] = transformer(h) ++ t.flatmap(transformer)
+  def flatMap[B](transformer: A => MyList[B]): MyList[B] = transformer(h) ++ t.flatMap(transformer)
   /*
-      [1,2].flatmap( n => [n,n+1])
-      = [1,2] ++ [2].flatmap( n => [n,n+1] )
-      = [1,2] ++ [2,3] ++ Empty.flatmap( n => [n,n+1] )
+      [1,2].flatMap( n => [n,n+1])
+      = [1,2] ++ [2].flatMap( n => [n,n+1] )
+      = [1,2] ++ [2,3] ++ Empty.flatMap( n => [n,n+1] )
       = [1,2] ++ [2,3] ++ Empty
       = [1,2,2,3]
    */
@@ -244,8 +244,8 @@ object ListTest extends App{
   val transform1: Int => MyList[Int] = { (arg: Int) =>
     new Cons(arg, new Cons(arg + 1, Empty))
   }
-  println(list2.flatmap(transform1))                                                  // prints [1 2 2 3 3 4 4 5]
-  println(list2.flatmap(elem => new Cons(elem,new Cons(elem+1, Empty))))              // prints [1 2 2 3 3 4 4 5]
+  println(list2.flatMap(transform1))                                                  // prints [1 2 2 3 3 4 4 5]
+  println(list2.flatMap(elem => new Cons(elem,new Cons(elem+1, Empty))))              // prints [1 2 2 3 3 4 4 5]
   //Underscore notation won't work for this lambda because we're using elem twice and you can't use two underscores for one parameter because each underscore corresponds to a new parameter.
 
   println(clonedlist2 == list2)                                                        // prints true. Use of equals method which was implemented by making Cons a case-class. If , I hadn't used case then I would've had to define a recursive equals method.
@@ -257,5 +257,11 @@ object ListTest extends App{
 
   println(list2.fold(0)(_+_))                                                     //Prints 10
 
+  val temp = for {                                                                      //for-comprehension : Internally converted into map,flatMap,filter. This works because signatures of map,flatMap,filter are in desired form. More details in MapFlatMapFilterFor.scala
+    n <- list1
+    string <- listOfStrings
+  } yield n + "-" + string
+
+  println(temp)                                                                         //Prints "[2-Hello 2-Scala 1-Hello 1-Scala]"
 }
 
